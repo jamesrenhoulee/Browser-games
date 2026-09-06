@@ -6,3 +6,5 @@ A growing collection of browser-only games. Every game lives in its own folder, 
 
 - [Space Invaders](./space-invaders/) — classic wave-based alien shooter with degradable shields, a bonus UFO, and escalating difficulty.
   - Play instantly (no clone needed): https://raw.githack.com/jamesrenhoulee/Browser-games/claude/test-0yweyu/space-invaders/index.html
+- [Rift Brawlers](./rift-brawlers/) — original platform fighter (Smash-style damage%/knockback/stocks) with a 4-character roster, 2 stages, and a single-player-vs-CPU AI opponent.
+  - Play instantly (no clone needed): https://raw.githack.com/jamesrenhoulee/Browser-games/claude/test-0yweyu/rift-brawlers/index.html

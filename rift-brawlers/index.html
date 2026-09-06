@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Rift Brawlers</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="stage">
+ <div class="play-area">
+  <div class="game-frame">
+    <canvas id="game" aria-label="Rift Brawlers game canvas"></canvas>
+
+    <!-- Match HUD -->
+    <div class="hud hidden" id="matchHud">
+      <div class="fighter-panel left" id="p1Panel">
+        <div class="panel-top">
+          <span class="fighter-name" id="p1Name">P1</span>
+          <div class="stocks" id="p1Stocks"></div>
+        </div>
+        <div class="damage-row">
+          <span class="damage-value" id="p1Damage">0%</span>
+        </div>
+        <div class="ult-bar"><div class="ult-fill" id="p1UltFill"></div></div>
+      </div>
+
+      <button class="icon-btn pause-btn" id="pauseBtn" title="Pause" aria-label="Pause">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </button>
+
+      <div class="fighter-panel right" id="p2Panel">
+        <div class="panel-top">
+          <div class="stocks" id="p2Stocks"></div>
+          <span class="fighter-name" id="p2Name">CPU</span>
+        </div>
+        <div class="damage-row">
+          <span class="damage-value" id="p2Damage">0%</span>
+        </div>
+        <div class="ult-bar"><div class="ult-fill" id="p2UltFill"></div></div>
+      </div>
+    </div>
+
+    <!-- Character select -->
+    <div class="overlay" id="selectOverlay">
+      <div class="card wide">
+        <h1 class="title">RIFT<span>BRAWLERS</span></h1>
+        <p class="subtitle" id="selectSubtitle">Choose Your Fighter</p>
+        <div class="grid fighter-grid" id="fighterGrid"></div>
+        <button class="primary-btn hidden" id="toStageBtn">Next</button>
+      </div>
+    </div>
+
+    <!-- Stage select -->
+    <div class="overlay hidden" id="stageOverlay">
+      <div class="card wide">
+        <h2 class="title small">Choose Your Stage</h2>
+        <p class="subtitle" id="cpuAnnounce">CPU fighter: —</p>
+        <div class="grid stage-grid" id="stageGrid"></div>
+        <div class="controls-hint">
+          <div class="hint-row"><kbd>&larr;</kbd><kbd>&rarr;</kbd> Move &nbsp; <kbd>&uarr;</kbd> Jump &nbsp; <kbd>&darr;</kbd> Fast-fall</div>
+          <div class="hint-row"><kbd>J</kbd> Attack &nbsp; <kbd>K</kbd> Special &nbsp; <kbd>L</kbd> Ultimate</div>
+        </div>
+        <button class="primary-btn" id="fightBtn">Fight!</button>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="pauseOverlay">
+      <div class="card">
+        <h2 class="title small">PAUSED</h2>
+        <button class="primary-btn" id="resumeBtn">Resume</button>
+        <button class="secondary-btn" id="menuFromPauseBtn">Main Menu</button>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="resultsOverlay">
+      <div class="card">
+        <h2 class="title small" id="resultsTitle">P1 WINS</h2>
+        <p class="subtitle" id="resultsSubtitle">Stocks remaining: 1</p>
+        <button class="primary-btn" id="rematchBtn">Rematch</button>
+        <button class="secondary-btn" id="menuFromResultsBtn">Main Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Touch controls -->
+  <div class="touch-controls" id="touchControls">
+    <div class="touch-cluster left">
+      <button class="touch-btn dir" id="btnUp" aria-label="Jump">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 6l7 8H5z"/></svg>
+      </button>
+      <div class="touch-row">
+        <button class="touch-btn dir" id="btnLeft" aria-label="Move left">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="touch-btn dir" id="btnDown" aria-label="Fast-fall">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M5 10h14l-7 8z"/></svg>
+        </button>
+        <button class="touch-btn dir" id="btnRight" aria-label="Move right">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="touch-cluster right">
+      <button class="touch-btn action ult" id="btnUlt" aria-label="Ultimate">ULT</button>
+      <button class="touch-btn action special" id="btnSpecial" aria-label="Special">SPC</button>
+      <button class="touch-btn action attack" id="btnAttack" aria-label="Attack">ATK</button>
+    </div>
+  </div>
+ </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
