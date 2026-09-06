@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Neon Drive</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="stage">
+ <div class="play-area">
+  <div class="game-frame">
+    <canvas id="game" aria-label="Neon Drive race canvas"></canvas>
+
+    <!-- Race HUD -->
+    <div class="hud hidden" id="raceHud">
+      <div class="hud-top">
+        <div class="hud-chip">
+          <span class="chip-label">Lap</span>
+          <span class="chip-value"><span id="lapNum">1</span><span class="chip-sub">/3</span></span>
+        </div>
+        <div class="hud-chip">
+          <span class="chip-label">Pos</span>
+          <span class="chip-value"><span id="posNum">1</span><span class="chip-sub" id="posOrd">st</span><span class="chip-sub">/4</span></span>
+        </div>
+        <div class="hud-chip time">
+          <span class="chip-label">Time</span>
+          <span class="chip-value" id="totalTime">0:00.00</span>
+        </div>
+      </div>
+
+      <div class="hud-right">
+        <div class="hud-chip small">
+          <span class="chip-label">Lap Time</span>
+          <span class="chip-value" id="lapTime">0:00.00</span>
+        </div>
+        <div class="hud-chip small">
+          <span class="chip-label">Best Lap</span>
+          <span class="chip-value" id="bestLap">--:--</span>
+        </div>
+      </div>
+
+      <button class="icon-btn pause-btn" id="pauseBtn" title="Pause" aria-label="Pause">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </button>
+
+      <div class="speedo">
+        <span class="speed-num" id="speedNum">0</span>
+        <span class="speed-unit">KM/H</span>
+        <div class="boost-bar"><div class="boost-fill" id="boostFill"></div></div>
+        <span class="boost-label">BOOST</span>
+      </div>
+
+      <div class="standings" id="standings"></div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown hidden" id="countdown"><span id="countdownText">3</span></div>
+
+    <!-- Title -->
+    <div class="overlay" id="titleOverlay">
+      <div class="card">
+        <h1 class="title">NEON<span>DRIVE</span></h1>
+        <p class="subtitle">Anti-gravity street racing on the edge of the grid</p>
+        <button class="primary-btn" id="startBtn">Enter Garage</button>
+        <p class="tinyhint">Arrow keys / WASD to drive &nbsp;•&nbsp; Space to boost</p>
+      </div>
+    </div>
+
+    <!-- Garage / stat customization -->
+    <div class="overlay hidden" id="garageOverlay">
+      <div class="card wide">
+        <h2 class="title small">GARAGE</h2>
+        <p class="subtitle">Tune your machine &amp; spend your upgrade points</p>
+        <div class="garage-grid">
+          <div class="garage-preview">
+            <canvas id="previewCanvas"></canvas>
+            <div class="color-row" id="colorRow"></div>
+          </div>
+          <div class="garage-stats">
+            <div class="points-left">Points left: <span id="pointsLeft">6</span></div>
+            <div class="stat-editor" id="statEditor"></div>
+          </div>
+        </div>
+        <button class="primary-btn" id="toTrackBtn">Choose Track</button>
+        <button class="secondary-btn" id="garageBackBtn">Back</button>
+      </div>
+    </div>
+
+    <!-- Track select -->
+    <div class="overlay hidden" id="trackOverlay">
+      <div class="card wide">
+        <h2 class="title small">SELECT TRACK</h2>
+        <p class="subtitle">3 laps &nbsp;•&nbsp; 4 racers &nbsp;•&nbsp; fastest wins</p>
+        <div class="track-grid" id="trackGrid"></div>
+        <button class="primary-btn" id="raceBtn">Start Race</button>
+        <button class="secondary-btn" id="trackBackBtn">Back to Garage</button>
+      </div>
+    </div>
+
+    <!-- Pause -->
+    <div class="overlay hidden" id="pauseOverlay">
+      <div class="card">
+        <h2 class="title small">PAUSED</h2>
+        <button class="primary-btn" id="resumeBtn">Resume</button>
+        <button class="secondary-btn" id="restartBtn">Restart Race</button>
+        <button class="secondary-btn" id="menuFromPauseBtn">Main Menu</button>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="overlay hidden" id="resultsOverlay">
+      <div class="card">
+        <h2 class="title small" id="resultsTitle">RACE COMPLETE</h2>
+        <div class="result-place" id="resultPlace">1st</div>
+        <p class="new-record hidden" id="newRecord">New Best Lap!</p>
+        <div class="result-times" id="resultTimes"></div>
+        <button class="primary-btn" id="rematchBtn">Rematch</button>
+        <button class="secondary-btn" id="changeCarBtn">Change Car</button>
+        <button class="secondary-btn" id="menuFromResultsBtn">Main Menu</button>
+      </div>
+    </div>
+
+    <!-- Load error -->
+    <div class="overlay hidden" id="errorOverlay">
+      <div class="card">
+        <h2 class="title small">ENGINE OFFLINE</h2>
+        <p class="subtitle" id="errorText">The 3D engine failed to load.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Touch controls -->
+  <div class="touch-controls" id="touchControls">
+    <div class="touch-cluster left">
+      <button class="touch-btn dir" id="btnLeft" aria-label="Steer left">
+        <svg viewBox="0 0 24 24" width="26" height="26"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <button class="touch-btn dir" id="btnRight" aria-label="Steer right">
+        <svg viewBox="0 0 24 24" width="26" height="26"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+    <div class="touch-cluster right">
+      <button class="touch-btn action boost" id="btnBoost" aria-label="Boost">BOOST</button>
+      <button class="touch-btn action brake" id="btnBrake" aria-label="Brake">BRK</button>
+      <button class="touch-btn action gas" id="btnGas" aria-label="Accelerate">GAS</button>
+    </div>
+  </div>
+ </div>
+</div>
+
+<script src="vendor/three.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
