@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Space Invaders</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="stage">
+ <div class="play-area">
+  <div class="game-frame">
+    <canvas id="game" aria-label="Space Invaders game canvas"></canvas>
+
+    <!-- HUD -->
+    <div class="hud">
+      <div class="hud-panel hud-left">
+        <span class="hud-label">Score</span>
+        <span class="hud-value" id="score">0</span>
+      </div>
+      <div class="hud-panel hud-center">
+        <span class="hud-label">Wave</span>
+        <span class="hud-value" id="wave">1</span>
+      </div>
+      <div class="hud-panel hud-right">
+        <span class="hud-label">Best</span>
+        <span class="hud-value" id="highscore">0</span>
+      </div>
+    </div>
+
+    <div class="lives" id="lives" aria-label="Lives remaining"></div>
+
+    <button class="icon-btn mute-btn" id="muteBtn" title="Toggle sound" aria-label="Toggle sound">
+      <svg id="muteIcon" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M4 9v6h4l5 5V4L8 9H4z"/></svg>
+    </button>
+
+    <button class="icon-btn pause-btn" id="pauseBtn" title="Pause" aria-label="Pause">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+    </button>
+
+    <!-- Overlays -->
+    <div class="overlay" id="startOverlay">
+      <div class="card">
+        <h1 class="title">SPACE<span>INVADERS</span></h1>
+        <p class="subtitle">Defend Earth from the alien armada</p>
+        <div class="controls-hint">
+          <div class="hint-row"><kbd>&larr;</kbd><kbd>&rarr;</kbd> or <kbd>A</kbd><kbd>D</kbd> Move</div>
+          <div class="hint-row"><kbd>Space</kbd> Fire</div>
+          <div class="hint-row"><kbd>P</kbd> Pause</div>
+        </div>
+        <button class="primary-btn" id="startBtn">Launch</button>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="pauseOverlay">
+      <div class="card">
+        <h2 class="title small">PAUSED</h2>
+        <button class="primary-btn" id="resumeBtn">Resume</button>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="gameOverOverlay">
+      <div class="card">
+        <h2 class="title small" id="gameOverTitle">GAME OVER</h2>
+        <p class="subtitle">Final Score</p>
+        <div class="final-score" id="finalScore">0</div>
+        <p class="new-best hidden" id="newBest">New Best Score!</p>
+        <button class="primary-btn" id="retryBtn">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Touch controls -->
+  <div class="touch-controls" id="touchControls">
+    <button class="touch-btn" id="btnLeft" aria-label="Move left">
+      <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="touch-btn fire" id="btnFire" aria-label="Fire">
+      <svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="8" fill="currentColor"/></svg>
+    </button>
+    <button class="touch-btn" id="btnRight" aria-label="Move right">
+      <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+ </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
